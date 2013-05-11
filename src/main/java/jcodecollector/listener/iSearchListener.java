@@ -15,6 +15,6 @@
  */
 package jcodecollector.listener;
 
-public interface SearchListener {
+public interface iSearchListener {
     public void updateSearch(boolean active);
 }

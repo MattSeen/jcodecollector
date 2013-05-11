@@ -19,52 +19,45 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * Incapsula il concetto di "snippet". Ogni snippet e' composto dal codice, una
- * categoria, una serie di tag ed un commento addizionale oltre che da un nome
- * (univoco).
+ * Encapsulates the concept of "snippets". Each snippet and 'consist of the
+ * code, a Category, a set of tags and an additional comment as well as a name
+ * (Unique).
  * 
  * @author Alessandro Cocco me@alessandrococco.com
  */
 public class Snippet implements Cloneable {
-    /** La categoria dello snippet. */
-    private String category;
-
-    /** Il nome dello snippet. */
-    private String name;
-
-    /** I tag dello snippet. */
+    private String            category;
+    private String            name;
     private ArrayList<String> tags;
-
-    /** Il codice relativo allo snippet. */
-    private String code;
-
-    /** Un commento relativo allo snippet. */
-    private String comment;
-
-    /** Lo stile da usare per colorare il codice. */
-    private String syntax;
-
-    /** Stato dello snippet. */
-    private boolean locked;
-
-    /** Id dello snippet. */
-    private int id;
+    private String            code;
+    private String            comment;
+    private String            syntax;
+    private boolean           locked;
+    private int               id;
 
     /**
      * Instanzia uno snippet completo dei suoi dati.
      * 
-     * @param id L'identificatore univoco dello snippet.
-     * @param category La categoria dello snippet.
-     * @param name Il nome dello snippet,
-     * @param tags I tag dello snippet.
-     * @param code Il codice dello snippet.
-     * @param comment Un commento (opzionale) sullo snippet.
-     * @param syntax Lo stile di colorazione sintattica associato.
-     * @param locked <code>true</code> se lo snippet e' bloccato,
-     *        <code>false</code> altrimenti.
+     * @param id
+     *            L'identificatore univoco dello snippet.
+     * @param category
+     *            La categoria dello snippet.
+     * @param name
+     *            Il nome dello snippet,
+     * @param tags
+     *            I tag dello snippet.
+     * @param code
+     *            Il codice dello snippet.
+     * @param comment
+     *            Un commento (opzionale) sullo snippet.
+     * @param syntax
+     *            Lo stile di colorazione sintattica associato.
+     * @param locked
+     *            <code>true</code> se lo snippet e' bloccato,
+     *            <code>false</code> altrimenti.
      */
-    public Snippet(int id, String category, String name, String[] tags,
-            String code, String comment, String syntax, boolean locked) {
+    public Snippet(int id, String category, String name, String[] tags, String code,
+            String comment, String syntax, boolean locked) {
         if (syntax == null) {
             syntax = new String();
         }
@@ -79,14 +72,14 @@ public class Snippet implements Cloneable {
         this.locked = locked;
     }
 
-    public Snippet(String category, String name, String[] tags, String code,
-            String comment, String syntax) {
+    public Snippet(String category, String name, String[] tags, String code, String comment,
+            String syntax) {
         this(-1, category, name, tags, code, comment, syntax, false);
     }
 
     /**
-     * Istanzia uno snippet vuoto. I vari attributi dovranno ricevere dei valori
-     * validi dai metodi setter.
+     * Instantiates an empty snippet. The various attributes should receive
+     * values Valid from setter methods.
      */
     public Snippet() {
         this(-1, "", "", new String[] {}, "", "", "", false);
@@ -104,7 +97,8 @@ public class Snippet implements Cloneable {
     /**
      * Assegna allo snippet una nuova categoria.
      * 
-     * @param category la nuova categoria dello snippet.
+     * @param category
+     *            la nuova categoria dello snippet.
      */
     public void setCategory(String category) {
         this.category = category;
@@ -122,7 +116,8 @@ public class Snippet implements Cloneable {
     /**
      * Assegna un nuovo nome allo snippet.
      * 
-     * @param name il nuovo nome dello snippet.
+     * @param name
+     *            il nuovo nome dello snippet.
      */
     public void setName(String name) {
         this.name = name;
@@ -141,7 +136,8 @@ public class Snippet implements Cloneable {
     /**
      * Aggiorna i tag dello snippet.
      * 
-     * @param tags l'array contenente i nuovi tag.
+     * @param tags
+     *            l'array contenente i nuovi tag.
      */
     public void setTags(String[] tags) {
         // this.tags = tags.clone();
@@ -160,7 +156,8 @@ public class Snippet implements Cloneable {
     /**
      * Aggiorna il codice dello snippet.
      * 
-     * @param code il nuovo codice dello snippet.
+     * @param code
+     *            il nuovo codice dello snippet.
      */
     public void setCode(String code) {
         this.code = code;
@@ -180,7 +177,8 @@ public class Snippet implements Cloneable {
     /**
      * Aggiorna il commento dello snippet.
      * 
-     * @param comment il nuovo commento dello snippet.
+     * @param comment
+     *            il nuovo commento dello snippet.
      */
     public void setComment(String comment) {
         this.comment = comment;
@@ -200,8 +198,9 @@ public class Snippet implements Cloneable {
     /**
      * Aggiorna il nome dello stile di colorazione sintattica dello snippet.
      * 
-     * @param syntax Il nuovo nome dello stile di colorazione sintattica dello
-     *        snippet.
+     * @param syntax
+     *            Il nuovo nome dello stile di colorazione sintattica dello
+     *            snippet.
      */
     public void setSyntax(String syntax) {
         this.syntax = syntax;
@@ -219,7 +218,8 @@ public class Snippet implements Cloneable {
     /**
      * Imposta l'id dello snippet.
      * 
-     * @param id il nuovo valore dell'id.
+     * @param id
+     *            il nuovo valore dell'id.
      */
     public void setId(int id) {
         this.id = id;
@@ -238,8 +238,9 @@ public class Snippet implements Cloneable {
     /**
      * Blocca o sblocca lo snippet.
      * 
-     * @param locked <code>true</code> per bloccare lo snippet,
-     *        <code>false</code> per sbloccarlo.
+     * @param locked
+     *            <code>true</code> per bloccare lo snippet, <code>false</code>
+     *            per sbloccarlo.
      */
     public void setLocked(boolean locked) {
         this.locked = locked;
@@ -252,7 +253,8 @@ public class Snippet implements Cloneable {
      *         virgola ed uno spazio.
      */
     public String getTagsAsString() {
-        if (tags == null || tags.size() == 0 || (tags.size() == 1 && tags.get(0).trim().length() == 0)) {
+        if (tags == null || tags.size() == 0
+                || (tags.size() == 1 && tags.get(0).trim().length() == 0)) {
             return "";
         }
 
@@ -276,7 +278,6 @@ public class Snippet implements Cloneable {
 
     @Override
     public Object clone() throws CloneNotSupportedException {
-        return new Snippet(category, name, tags.toArray(new String[] {}), code,
-                comment, syntax);
+        return new Snippet(category, name, tags.toArray(new String[] {}), code, comment, syntax);
     }
 }

@@ -33,7 +33,7 @@ import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
 /**
- * Classe che si occupa di leggere/scrivere file XML.
+ * Class that takes care of reading / writing XML files used during export and import.
  * 
  * @author Alessandro Cocco me@alessandrococco.com
  */
@@ -135,8 +135,7 @@ public class XMLManagerOldVersion {
         return array;
     }
 
-    public static void importFromXML(File file) throws IOException,
-            JDOMException {
+    public static void importFromXML(File file) throws IOException, JDOMException {
         Element root = new SAXBuilder().build(file).getRootElement();
 
         // ArrayList<Syntax> syntaxes = getSyntaxesFromFile(root);
@@ -182,43 +181,11 @@ public class XMLManagerOldVersion {
                     tags.add(tagsIterator.next().getTextTrim());
                 }
 
-                snippets.add(new Snippet(id, category, name, tags.toArray(new String[] {}), code, comment, syntax, locked));
+                snippets.add(new Snippet(id, category, name, tags.toArray(new String[] {}), code,
+                        comment, syntax, locked));
             }
         }
 
         return snippets;
     }
-
-    // /**
-    // * Restituisce l'array di stili ottenuto a partire dalla radice XML
-    // indicata
-    // * come parametro.
-    // *
-    // * @param root La radice del file XML da cui leggere gli stili.
-    // * @return un array di <code>CodeSyntax</code> contenente tutti gli stili
-    // * trovati a partire dalla radice XML indicata
-    // */
-    // @SuppressWarnings("unchecked")
-    // public static ArrayList<Syntax> getSyntaxesFromFile(Element root) {
-    // ArrayList<Syntax> syntaxes = new ArrayList<Syntax>();
-    //
-    // Iterator<Element> syntaxesIterator =
-    // root.getChildren("style").iterator();
-    // while (syntaxesIterator.hasNext()) {
-    // Element currentElement = syntaxesIterator.next();
-    //
-    // String name = currentElement.getAttributeValue("name");
-    //
-    // ArrayList<String> keywords = new ArrayList<String>();
-    // Iterator<Element> keywordsIterator = currentElement.getChildren(
-    // "keyword").iterator();
-    // while (keywordsIterator.hasNext()) {
-    // keywords.add(keywordsIterator.next().getTextTrim());
-    // }
-    //
-    // syntaxes.add(new Syntax(name, keywords));
-    // }
-    //
-    // return syntaxes;
-    // }
 }

@@ -15,6 +15,6 @@
  */
 package jcodecollector.listener;
 
-public interface CountListener {
+public interface iCountListener {
     public void countUpdate(int categories, int snippets);
 }

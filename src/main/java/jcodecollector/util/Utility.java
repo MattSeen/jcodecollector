@@ -16,25 +16,18 @@
 package jcodecollector.util;
 
 /**
- * Funzioni di utilita' varia.
- * 
- * @author Alessandro Cocco
+ * Simple utility class for common actions.
  */
 public class Utility {
 
-    /** L'elenco dei nomi non permessi. */
-    private static final String[] invalidNames = { "null", "Remove",
-            "New Category...", "New Category", "Rename...",
-            "Show In Editor...", "Category", "Export", "Export...",
+    private Utility() {
+        // do nothing
+    }
+    
+    private static final String[] invalidNames = { "null", "Remove", "New Category...",
+            "New Category", "Rename...", "Show In Editor...", "Category", "Export", "Export...",
             "Set Syntax...", "Merge In...", "Merge In" };
 
-    /**
-     * Verifica se il nome indicato e' valido.
-     * 
-     * @param name Il nome da controllare.
-     * @return <code>true</code> se il nome e' valido, <code>false</code>
-     *         altrimenti
-     */
     public static boolean nameIsValid(String name) {
         if (name == null || name.trim().length() == 0) {
             return false;
@@ -47,9 +40,5 @@ public class Utility {
         }
 
         return true;
-    }
-
-    private Utility() {
-        // do nothing
     }
 }

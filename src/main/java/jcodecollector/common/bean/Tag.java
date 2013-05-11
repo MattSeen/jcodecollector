@@ -20,9 +20,9 @@ package jcodecollector.common.bean;
  */
 public class Tag implements Comparable<Tag> {
 
-    private String category;
+    private String  category;
 
-    private String name;
+    private String  name;
 
     private boolean selected;
 
@@ -78,8 +78,7 @@ public class Tag implements Comparable<Tag> {
                 && (this.category == null || !this.category.equals(other.category))) {
             return false;
         }
-        if (this.name != other.name
-                && (this.name == null || !this.name.equals(other.name))) {
+        if (this.name != other.name && (this.name == null || !this.name.equals(other.name))) {
             return false;
         }
         return true;

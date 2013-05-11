@@ -15,9 +15,6 @@
  */
 package jcodecollector.listener;
 
-public interface WindowListener {
-	
-    public void updateWindowStatus(boolean documentModified);
-    
-    public void updateLineNumbers(boolean enabled);
+public interface iMenuListener {
+    public void updateMenu(boolean enabled, boolean resetExportSubMenu);
 }

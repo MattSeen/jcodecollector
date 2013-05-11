@@ -75,8 +75,7 @@ public class ModifiedFlowLayout extends FlowLayout {
             for (int i = 0; i < n; i++) {
                 Component c = target.getComponent(i);
                 if (c.isVisible()) {
-                    Dimension d = minimum ? c.getMinimumSize()
-                            : c.getPreferredSize();
+                    Dimension d = minimum ? c.getMinimumSize() : c.getPreferredSize();
                     if ((x == 0) || ((x + d.width) <= maxwidth)) {
                         if (x > 0) {
                             x += hgap;

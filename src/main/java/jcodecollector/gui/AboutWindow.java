@@ -22,7 +22,6 @@ import javax.swing.JLabel;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
-import jcodecollector.gui.Icons;
 import jcodecollector.util.GeneralInfo;
 
 /**
@@ -36,8 +35,8 @@ public class AboutWindow extends JDialog {
     /**
      * Crea la finestra di about di jCodeCollector.
      * 
-     * @param mainFrame Il riferimento alla finestra principale
-     *        dell'applicazione.
+     * @param mainFrame
+     *            Il riferimento alla finestra principale dell'applicazione.
      */
     public AboutWindow(final MainFrame mainFrame) {
         setResizable(false);
@@ -46,11 +45,11 @@ public class AboutWindow extends JDialog {
         setLayout(new BorderLayout());
         getRootPane().setBorder(new EmptyBorder(30, 15, 30, 15));
 
-        String text = String.format("<html><center>&nbsp; <b>%s</b><br>" +
-                "&nbsp; Version %s<br><br>&nbsp; <b>Written by</b><br>" +
-                "&nbsp; Alessandro Cocco<br><br>" +
-                "<font size=-1>&nbsp; %s Alessandro Cocco &nbsp; " +
-                "<br>&nbsp; All Rights Reserved. &nbsp;</font></center></html>",
+        String text = String.format("<html><center>&nbsp; <b>%s</b><br>"
+                + "&nbsp; Version %s<br><br>&nbsp; <b>Written by</b><br>"
+                + "&nbsp; Alessandro Cocco<br><br>"
+                + "<font size=-1>&nbsp; %s Alessandro Cocco &nbsp; "
+                + "<br>&nbsp; All Rights Reserved. &nbsp;</font></center></html>",
                 GeneralInfo.APPLICATION_NAME, GeneralInfo.APPLICATION_VERSION,
                 GeneralInfo.COPYRIGHT_YEARS);
 

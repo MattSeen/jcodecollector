@@ -20,18 +20,18 @@ import java.awt.Color;
 public class ApplicationConstants {
 
     /** The default background color of a standard mac panel. */
-    public static final Color DEFAULT_MAC_COLOR = new Color(232, 232, 232);
+    public static final Color  DEFAULT_MAC_COLOR   = new Color(232, 232, 232);
 
     /** The default background color of 'unified' mac panel. */
-    public static final Color UNIFIED_MAC_COLOR = new Color(123, 123, 124);
+    public static final Color  UNIFIED_MAC_COLOR   = new Color(123, 123, 124);
 
-    public static final String JCC_EXTENSION = ".jccp";
-    public static final int CATEGORY_LENGTH = 50;
-    public static final int SNIPPET_NAME_LENGTH = 100;
-    public static final int TAG_LENGTH = 50;
-    public static final int SYNTAX_NAME_LENGTH = 50;
-    public static final int KEYWORD_LENGTH = 50;
-    public static final int CODE_LENGTH = 25000;
-    public static final int COMMENT_LENGTH = 500;
-    
+    public static final String JCC_EXTENSION       = ".jccp";
+    public static final int    CATEGORY_LENGTH     = 50;
+    public static final int    SNIPPET_NAME_LENGTH = 100;
+    public static final int    TAG_LENGTH          = 50;
+    public static final int    SYNTAX_NAME_LENGTH  = 50;
+    public static final int    KEYWORD_LENGTH      = 50;
+    public static final int    CODE_LENGTH         = 25000;
+    public static final int    COMMENT_LENGTH      = 500;
+
 }

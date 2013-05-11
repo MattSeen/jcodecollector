@@ -17,39 +17,14 @@ package jcodecollector.listener;
 
 import jcodecollector.common.bean.Snippet;
 
-/**
- * @author Alessandro Cocco
- */
-public interface SnippetListener {
-    /**
-     * Invocato quando lo snippet indicato viene modificato.
-     * 
-     * @param snippet Lo snippet che e' stato modificato.
-     */
+public interface iSnippetListener {
+    
     public void snippetEdited(Snippet snippet);
 
-    /**
-     * Invocato quando uno snippet viene rinominato.
-     * 
-     * @param oldName Il vecchio nome dello snippet.
-     * @param newName Il nuovo nome dello snippet.
-     */
     public void snippetRenamed(String oldName, String newName);
 
-    /**
-     * Invocato quando uno snippet viene rimosso.
-     * 
-     * @param snippet Lo snippet rimosso.
-     */
     public void snippetRemoved(Snippet snippet);
 
-    /**
-     * Invocato quando lo stato di uno snippet cambia.
-     * 
-     * @param validated
-     * @param saved
-     * @param locked
-     */
     public void updateSnippetStatus(boolean validated, boolean saved, boolean locked);
 
     public void syntaxRenamed(String newName, String category);

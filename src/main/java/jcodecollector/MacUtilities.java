@@ -29,19 +29,19 @@ import com.apple.eawt.QuitHandler;
 import com.apple.eawt.QuitResponse;
 
 /**
- * Migliora l'integrazione dell'applicazione con Mac OS X usando le
- * funzionalita' offerte da Apple. Poiche' non sono portabili, questa classe
- * dovra' essere caricata dinamicamente solo su Mac OS X.
+ * Improves application integration with Mac OS X using the Functionality 'from
+ * Apple. Since 'are not portable, this class Must 'be dynamically loaded only
+ * on Mac OS X.
  * 
  * @author Alessandro Cocco
  */
 public class MacUtilities {
 
-//    private MainFrame mainFrame;
+    // private MainFrame mainFrame;
 
-//    public void setMainFrame(MainFrame mainFrame) {
-//        this.mainFrame = mainFrame;
-//    }
+    // public void setMainFrame(MainFrame mainFrame) {
+    // this.mainFrame = mainFrame;
+    // }
 
     public MacUtilities() {
         // do nothing

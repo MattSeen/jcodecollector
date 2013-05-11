@@ -16,29 +16,17 @@
 package jcodecollector.util;
 
 /**
- * General informations about the application.
- * 
- * @author Alessandro Cocco
+ * Info to be displayed on pop panel.
  */
 public class GeneralInfo {
 
-    /** Application's name. */
-    public static final String APPLICATION_NAME = "jCodeCollector";
-
-    /** Application's version. */
+    public static final String APPLICATION_NAME    = "jCodeCollector";
     public static final String APPLICATION_VERSION = "2.5";
-
-    /** Years of copyright. */
-    public static final String COPYRIGHT_YEARS = "© 2008-2011";
-
-    /** My blog address. */
-    public static final String BLOG_URL = "http://alessandro-cocco.blogspot.com";
-
-    /** My email address. */
-    public static final String MY_EMAIL = "mailto:alessandro-cocco@javastaff.com";
+    public static final String COPYRIGHT_YEARS     = "© 2008-2011";
+    public static final String BLOG_URL            = "http://alessandro-cocco.blogspot.com";
+    public static final String MY_EMAIL            = "mailto:alessandro-cocco@javastaff.com";
 
     private GeneralInfo() {
         // do nothing
     }
-
 }

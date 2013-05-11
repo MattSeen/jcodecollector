@@ -23,10 +23,10 @@ import jcodecollector.State;
 import jcodecollector.common.bean.Snippet;
 
 public class Controller {
-    private static Controller controller = new Controller();
-    private static DBMS dbms = DBMS.getInstance();
+    private static Controller    controller    = new Controller();
+    private static DBMS          dbms          = DBMS.getInstance();
     private static SearchResults searchManager = SearchResults.getInstance();
-    private static SearchFilter filters = SearchFilter.getInstance();
+    private static SearchFilter  filters       = SearchFilter.getInstance();
 
     private Controller() {
         // do nothing
@@ -37,37 +37,42 @@ public class Controller {
     }
 
     public boolean removeSnippet(String name) {
-        return State.getInstance().isSearchActive() ? searchManager.removeSnippet(name) : dbms.removeSnippet(name);
+        return State.getInstance().isSearchActive() ? searchManager.removeSnippet(name) : dbms
+                .removeSnippet(name);
     }
 
     public boolean updateSnippet(Snippet oldSnippet, Snippet newSnippet) {
-        return State.getInstance().isSearchActive() ? searchManager.updateSnippet(oldSnippet, newSnippet) : dbms.updateSnippet(oldSnippet, newSnippet);
+        return State.getInstance().isSearchActive() ? searchManager.updateSnippet(oldSnippet,
+                newSnippet) : dbms.updateSnippet(oldSnippet, newSnippet);
     }
 
     public boolean removeCategory(String text) {
-        return State.getInstance().isSearchActive() ? searchManager.removeCategory(text)
-                : dbms.removeCategory(text);
+        return State.getInstance().isSearchActive() ? searchManager.removeCategory(text) : dbms
+                .removeCategory(text);
     }
 
     public boolean renameCategory(String oldName, String newName) {
-        return State.getInstance().isSearchActive() ? searchManager.renameCategory(oldName, newName) : dbms.renameCategory(oldName, newName);
+        return State.getInstance().isSearchActive() ? searchManager
+                .renameCategory(oldName, newName) : dbms.renameCategory(oldName, newName);
     }
 
     public boolean updateSyntax(String newSyntax, String category, String selectedSnippet) {
-        return State.getInstance().isSearchActive() ? searchManager.setSyntax(newSyntax, category, selectedSnippet) : dbms.setSyntaxToCategory(newSyntax, category, selectedSnippet);
+        return State.getInstance().isSearchActive() ? searchManager.setSyntax(newSyntax, category,
+                selectedSnippet) : dbms.setSyntaxToCategory(newSyntax, category, selectedSnippet);
     }
 
     /**
-     * Restituisce l'elenco delle categorie presenti nel database.
+     * Returns the list of categories in the database
      * 
-     * @return l'elenco delle categorie presenti nel database
+     * @return the list of categories in the database
      */
     public ArrayList<String> getAllCategories() {
         return dbms.getCategories();
     }
 
     public ArrayList<String> getCategories() {
-        return State.getInstance().isSearchActive() ? searchManager.getCategories() : dbms.getCategories();
+        return State.getInstance().isSearchActive() ? searchManager.getCategories() : dbms
+                .getCategories();
     }
 
     public String getCategoryOf(String snippet) {
@@ -79,7 +84,8 @@ public class Controller {
     }
 
     public ArrayList<String> getSnippetsName(String category) {
-        return State.getInstance().isSearchActive() ? searchManager.getSnippets(category) : dbms.getSnippetsNames(category);
+        return State.getInstance().isSearchActive() ? searchManager.getSnippets(category) : dbms
+                .getSnippetsNames(category);
     }
 
     public boolean insertNewSnippet(Snippet newSnippet) {
@@ -99,11 +105,13 @@ public class Controller {
     }
 
     public int countCategories() {
-        return State.getInstance().isSearchActive() ? searchManager.countCategories() : dbms.countCategories();
+        return State.getInstance().isSearchActive() ? searchManager.countCategories() : dbms
+                .countCategories();
     }
 
     public int countSnippets() {
-        return State.getInstance().isSearchActive() ? searchManager.countSnippets() : dbms.countSnippets();
+        return State.getInstance().isSearchActive() ? searchManager.countSnippets() : dbms
+                .countSnippets();
     }
 
     public int size() {

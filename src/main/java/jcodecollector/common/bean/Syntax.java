@@ -18,14 +18,14 @@ package jcodecollector.common.bean;
 import java.util.Collection;
 
 /**
- * Questa classe incapsula il concetto di "stile". Ogni stile ha un nome ed una
- * serie di keywords, chiavi che saranno colorate all'interno dell'editor.
+ * This class encapsulates the concept of "style". Each style has a name and a
+ * Set of keywords, which will be colored keys in the editor.
  * 
  * @author Alessandro Cocco me@alessandrococco.com
  */
 public class Syntax implements Comparable<Syntax> {
     /** Il nome del linguaggio a cui appartiene questa sintassi. */
-    private String name;
+    private String   name;
 
     /** Le parole chiave da colorare. */
     private String[] keywords;
@@ -84,8 +84,7 @@ public class Syntax implements Comparable<Syntax> {
         }
 
         final Syntax other = (Syntax) obj;
-        if (this.name != other.name
-                && (this.name == null || !this.name.equals(other.name))) {
+        if (this.name != other.name && (this.name == null || !this.name.equals(other.name))) {
             return false;
         }
 

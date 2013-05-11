@@ -19,6 +19,10 @@ import java.io.File;
 
 public class FileManager {
 
+    private FileManager() {
+        // do nothing
+    }
+
     public static boolean deleteDirectory(File path) {
         if (path.exists()) {
             File[] files = path.listFiles();
@@ -32,10 +36,6 @@ public class FileManager {
         }
 
         return path.delete();
-    }
-
-    private FileManager() {
-        // do nothing
     }
 
 }

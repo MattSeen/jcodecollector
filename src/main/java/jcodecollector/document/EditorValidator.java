@@ -37,23 +37,26 @@ public class EditorValidator implements DocumentListener {
     private JTextComponent[] components;
 
     /** Gli eventuali componenti opzionali. */
-    private boolean[] optional;
+    private boolean[]        optional;
 
     /**
      * Se <code>true</code> indica che il validatore e' in funzione, se
      * <code>false</code> il validatore e' disattivato.
      */
-    private boolean running;
+    private boolean          running;
 
     /**
      * Costruisce il validatore dei componenti indicati. Il secondo parametro
      * indica se ci sono componenti opzionali.
      * 
-     * @param components I componenti ({@link JTextArea}, {@link JTextField},
-     *        {@link JEditorPane} ecc. da validare.
-     * @param optional Un array della stessa dimensione del precedente. In ogni
-     *        posizione, <code>true</code> indica che il corrispondente
-     *        componente e' opzionale, <code>false</code> che e' obbligatorio.
+     * @param components
+     *            I componenti ({@link JTextArea}, {@link JTextField},
+     *            {@link JEditorPane} ecc. da validare.
+     * @param optional
+     *            Un array della stessa dimensione del precedente. In ogni
+     *            posizione, <code>true</code> indica che il corrispondente
+     *            componente e' opzionale, <code>false</code> che e'
+     *            obbligatorio.
      */
     public EditorValidator(JTextComponent[] components, boolean[] optional) {
         if (components.length != optional.length) {

@@ -23,11 +23,11 @@ import java.util.TreeSet;
 import jcodecollector.common.bean.Snippet;
 
 public class SearchResults {
-    
-    /** La mappa ordinata che contiene gli snippet suddivisi per categoria. */
-    private TreeMap<String, TreeSet<String>> data = null;
 
-    private static SearchResults searchResults = new SearchResults();
+    /** The map that contains the snippet ordered by category. */
+    private TreeMap<String, TreeSet<String>> data          = null;
+
+    private static SearchResults             searchResults = new SearchResults();
 
     public static SearchResults getInstance() {
         return searchResults;
@@ -52,10 +52,11 @@ public class SearchResults {
     }
 
     /**
-     * Richiede al database la cancellazione di tutti gli snippet della
-     * categoria indicata trovati con l'ultima ricerca.
+     * Asks the database to delete all the snippets of the class indicated found
+     * with the latest search.
      * 
-     * @param category La categoria degli snippet da cancellare.
+     * @param category
+     *            The category of the snippet to delete.
      */
     public boolean removeCategory(String category) {
         if (!data.containsKey(category)) {
@@ -77,26 +78,26 @@ public class SearchResults {
             return false;
         }
 
-        // ottengo gli snippet della vecchia categoria
+        // I get snippets of the old category
         TreeSet<String> oldValue = data.get(oldName);
 
-        // rimuovo la vecchia categoria dalla mappa
+        // I remove the old category from the map
         data.remove(oldName);
 
-        // se la nuova categoria non e' presente la inserisco con tutti gli
-        // snippet della vecchia categoria
+        // if the new category is not 'this add with all
+        // Snippet of the old category
         if (!data.containsKey(newName)) {
             data.put(newName, oldValue);
         } else {
-            // altrimenti le aggiungo i vecchi snippet
+            // otherwise add the old snippet
             TreeSet<String> newValue = data.get(newName);
             newValue.addAll(oldValue);
             data.put(newName, newValue);
         }
 
-        // fatto questo posso chiedere al dbms di effettuare l'aggiornamento
-        return DBMS.getInstance().renameCategoryOf(
-                new ArrayList<String>(data.get(newName)), newName);
+        // this is done I can ask the DBMS to upgrade
+        return DBMS.getInstance().renameCategoryOf(new ArrayList<String>(data.get(newName)),
+                newName);
     }
 
     public boolean removeSnippet(String name) {
@@ -157,10 +158,10 @@ public class SearchResults {
         if (!data.containsKey(category)) {
             return false;
         }
-        
+
         ArrayList<String> snippets = new ArrayList<String>(data.get(category));
         snippets.remove(selected);
-        
+
         return DBMS.getInstance().setSyntaxToSnippets(newSyntax, snippets);
     }
 }

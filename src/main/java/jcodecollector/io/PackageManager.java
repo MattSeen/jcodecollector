@@ -33,15 +33,10 @@ import org.jdom2.output.XMLOutputter;
 
 public class PackageManager {
 
-    /**
-     * Esporta in XML un gruppo di snippet.
-     * 
-     * @param file Il file in cui salvare gli snippet.
-     * @param category La categoria degli snippet da esportare. Se
-     *        <code>null</code> vengono esportati tutti gli snippet.
-     * @return <code>true</code> se l'esportazione avviene con successo,
-     *         <code>false</code> altrimenti
-     */
+    private PackageManager() {
+        // do nothing
+    }
+
     public static boolean exportSnippets(File file, String category) {
         ArrayList<Snippet> array = null;
 
@@ -113,7 +108,6 @@ public class PackageManager {
         @SuppressWarnings("unchecked")
         Iterator<Element> iterator = root.getChildren("snippet").iterator();
         while (iterator.hasNext()) {
-            // l'elemento e' uno snippet
             Element e = iterator.next();
 
             String category = e.getChildTextTrim("category");
@@ -129,16 +123,10 @@ public class PackageManager {
                 tags[i] = tagElements.get(i).getTextTrim();
             }
 
-            // creo lo snippet
             Snippet snippet = new Snippet(-1, category, name, tags, code, comment, syntax, false);
             array.add(snippet);
         }
 
         return array;
     }
-
-    private PackageManager() {
-        // do nothing
-    }
-
 }

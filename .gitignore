@@ -33,9 +33,11 @@ _ReSharper*/
 *.log
 *.classpath
 *.class
+.settings/
 
 # Package Files #
 *.jar
 *.war
 *.ear
 
+jCodeCollector/

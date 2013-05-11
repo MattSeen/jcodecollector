@@ -20,387 +20,281 @@ import java.util.ArrayList;
 import jcodecollector.common.bean.Snippet;
 import jcodecollector.data.Controller;
 import jcodecollector.data.DBMS;
-import jcodecollector.listener.CategoryListener;
-import jcodecollector.listener.CountListener;
-import jcodecollector.listener.MenuListener;
-import jcodecollector.listener.SearchListener;
-import jcodecollector.listener.SnippetListener;
-import jcodecollector.listener.WindowListener;
+import jcodecollector.listener.iCategoryListener;
+import jcodecollector.listener.iCountListener;
+import jcodecollector.listener.iMenuListener;
+import jcodecollector.listener.iSearchListener;
+import jcodecollector.listener.iSnippetListener;
+import jcodecollector.listener.iWindowListener;
 
-public class State implements SnippetListener, CategoryListener, CountListener, MenuListener, WindowListener, SearchListener {
+/**
+ * Warning... using singleton pattern
+ * 
+ * @author MattSeen
+ * 
+ */
+public class State implements iSnippetListener, iCategoryListener, iCountListener, iMenuListener,
+        iWindowListener, iSearchListener {
 
-	/**
-	 * Gli oggetti che vogliono essere aggiornati su cio' che riguarda uno
-	 * snippet (ad esempio: quando viene salvato, ecc).
-	 */
-	private ArrayList<SnippetListener> snippetListeners;
+    private ArrayList<iSnippetListener>  snippetListeners;
+    private ArrayList<iCategoryListener> categoryListeners;
+    private ArrayList<iCountListener>    countListeners;
+    private ArrayList<iMenuListener>     menuListeners;
+    private ArrayList<iWindowListener>   windowListeners;
+    private ArrayList<iSearchListener>   searchListeners;
 
-	/**
-	 * Gli oggetti che vogliono essere aggiornati su cio' che riguarda una
-	 * categoria (ad esempio se viene rinominata).
-	 */
-	private ArrayList<CategoryListener> categoryListeners;
+    private String                       nameOfSelectedCategory;
+    private String                       nameOfSelectedSnippet;
+    private boolean                      snippetSaved;
+    private boolean                      snippetValidated;
+    private boolean                      snippetLocked;
+    private Snippet                      previousSnippet;
+    private boolean                      searchActive;
 
-	/**
-	 * Gli oggetti che vogliono essere aggiornati quando il numero di categorie
-	 * e/o snippet cambia.
-	 */
-	private ArrayList<CountListener> countListeners;
+    /** The only permitted instance of this class. */
+    private static State                 state = new State();
 
-	/**
-	 * Gli oggetti che vogliono essere aggiornati quando c'e' da modificare lo
-	 * stato degli elementi dei menu.
-	 */
-	private ArrayList<MenuListener> menuListeners;
+    private State() {
+        snippetListeners = new ArrayList<iSnippetListener>();
+        categoryListeners = new ArrayList<iCategoryListener>();
+        countListeners = new ArrayList<iCountListener>();
+        menuListeners = new ArrayList<iMenuListener>();
+        windowListeners = new ArrayList<iWindowListener>();
+        searchListeners = new ArrayList<iSearchListener>();
+    }
 
-	/**
-	 * Gli oggetti che vogliono essere aggiornati quando cambia lo stato della
-	 * finestra (ad esempio quando viene settato il flag 'document modified'.
-	 */
-	private ArrayList<WindowListener> windowListeners;
+    public static State getInstance() {
+        return state;
+    }
 
-	/**
-	 * Gli oggetti che vogliono essere aggiornati quando viene effettuata una
-	 * ricerca.
-	 */
-	private ArrayList<SearchListener> searchListeners;
+    public void addSnippetListener(iSnippetListener listener) {
+        snippetListeners.add(listener);
+    }
 
-	/** La categoria selezionata. */
-	private String nameOfSelectedCategory;
+    public boolean removeSnippetListener(iSnippetListener listener) {
+        return snippetListeners.remove(listener);
+    }
 
-	/** Lo snippet selezionato. */
-	private String nameOfSelectedSnippet;
+    public void addCategoryListener(iCategoryListener listener) {
+        categoryListeners.add(listener);
+    }
 
-	/**
-	 * Se <code>true</code> lo snippet corrente e' stato salvato e non ha subito
-	 * ulteriori modifiche.
-	 */
-	private boolean snippetSaved;
+    public boolean removeCategoryListener(iCategoryListener listener) {
+        return categoryListeners.remove(listener);
+    }
 
-	/** Se <code>true</code> lo snippet corrente e' stato validato. */
-	private boolean snippetValidated;
+    public void addCountListener(iCountListener listener) {
+        countListeners.add(listener);
+    }
 
-	/** Se <code>true</code> lo snippet corrente e' stato bloccato. */
-	private boolean snippetLocked;
+    public boolean removeCountListener(iCountListener listener) {
+        return countListeners.remove(listener);
+    }
 
-	/** Lo snippet precedente. */
-	private Snippet previousSnippet;
+    public void addMenuListener(iMenuListener listener) {
+        menuListeners.add(listener);
+    }
 
-	/** Se <code>true</code> indica che la ricerca e' attiva. */
-	private boolean searchActive;
+    public boolean removeMenuListener(iMenuListener listener) {
+        return menuListeners.remove(listener);
+    }
 
-	/** Istanzia i vari array di listener. */
-	private State() {
-		snippetListeners = new ArrayList<SnippetListener>();
-		categoryListeners = new ArrayList<CategoryListener>();
-		countListeners = new ArrayList<CountListener>();
-		menuListeners = new ArrayList<MenuListener>();
-		windowListeners = new ArrayList<WindowListener>();
-		searchListeners = new ArrayList<SearchListener>();
-	}
+    public void addWindowListener(iWindowListener listener) {
+        windowListeners.add(listener);
+    }
 
-	/** L'unica istanza permessa di questa classe. */
-	private static State state = new State();
+    public boolean removeWindowListener(iWindowListener listener) {
+        return windowListeners.remove(listener);
+    }
 
-	/**
-	 * Restituisce l'unica instanza permessa di {@link State}
-	 * 
-	 * @return l'unica instanza permessa di {@link State}
-	 */
-	public static State getInstance() {
-		return state;
-	}
+    public void addSearchListener(iSearchListener listener) {
+        searchListeners.add(listener);
+    }
 
-	public void addSnippetListener(SnippetListener listener) {
-		snippetListeners.add(listener);
-	}
+    public boolean removeSearchListener(iSearchListener listener) {
+        return searchListeners.remove(listener);
+    }
 
-	public boolean removeSnippetListener(SnippetListener listener) {
-		return snippetListeners.remove(listener);
-	}
+    /**
+     * @see jcodecollector.listener.iCategoryListener#categoriesUpdated(java.
+     *      lang.String)
+     */
+    public void categoriesUpdated(String selected) {
+        for (iCategoryListener listener : categoryListeners) {
+            listener.categoriesUpdated(selected);
+        }
+    }
 
-	public void addCategoryListener(CategoryListener listener) {
-		categoryListeners.add(listener);
-	}
+    /**
+     * @see jcodecollector.listener.iCategoryListener#categoryRemoved(java.lang
+     *      .String)
+     */
+    public void categoryRemoved(String name) {
+        for (iCategoryListener listener : categoryListeners) {
+            listener.categoryRemoved(name);
+        }
+    }
 
-	public boolean removeCategoryListener(CategoryListener listener) {
-		return categoryListeners.remove(listener);
-	}
+    /**
+     * @see jcodecollector.listener.iCategoryListener#categoryRenamed(java.lang
+     *      .String, java.lang.String)
+     */
+    public void categoryRenamed(String oldName, String newName) {
+        for (iCategoryListener listener : categoryListeners) {
+            listener.categoryRenamed(oldName, newName);
+        }
+    }
 
-	public void addCountListener(CountListener listener) {
-		countListeners.add(listener);
-	}
+    /** @see jcodecollector.listener.iSnippetListener#snippetRemoved(Snippet) */
+    public void snippetRemoved(Snippet snippet) {
+        for (iSnippetListener listener : snippetListeners) {
+            listener.snippetRemoved(snippet);
+        }
+    }
 
-	public boolean removeCountListener(CountListener listener) {
-		return countListeners.remove(listener);
-	}
+    /**
+     * @see jcodecollector.listener.iSnippetListener#snippetRenamed(java.lang.String,
+     *      java.lang.String)
+     */
+    public void snippetRenamed(String oldName, String newName) {
+        for (iSnippetListener listener : snippetListeners) {
+            listener.snippetRenamed(oldName, newName);
+        }
+    }
 
-	public void addMenuListener(MenuListener listener) {
-		menuListeners.add(listener);
-	}
+    /** @see iSnippetListener#snippetEdited(Snippet) */
+    public void snippetEdited(Snippet snippet) {
+        for (iSnippetListener listener : snippetListeners) {
+            listener.snippetEdited(snippet);
+        }
+    }
 
-	public boolean removeMenuListener(MenuListener listener) {
-		return menuListeners.remove(listener);
-	}
+    /** @see iSnippetListener#syntaxRenamed(String, String) */
+    public void syntaxRenamed(String newName, String category) {
+        for (iSnippetListener listener : snippetListeners) {
+            listener.syntaxRenamed(newName, category);
+        }
+    }
 
-	public void addWindowListener(WindowListener listener) {
-		windowListeners.add(listener);
-	}
+    /**
+     * Count how many categories and many snippets are present in the database
+     * or as Search result.
+     */
+    public void countUpdate() {
+        int categories;
+        int snippets;
 
-	public boolean removeWindowListener(WindowListener listener) {
-		return windowListeners.remove(listener);
-	}
+        if (searchActive) {
+            categories = Controller.getInstance().countCategories();
+            snippets = Controller.getInstance().countSnippets();
+        } else {
+            categories = DBMS.getInstance().countCategories();
+            snippets = DBMS.getInstance().countSnippets();
+        }
 
-	public void addSearchListener(SearchListener listener) {
-		searchListeners.add(listener);
-	}
+        countUpdate(categories, snippets);
+    }
 
-	public boolean removeSearchListener(SearchListener listener) {
-		return searchListeners.remove(listener);
-	}
+    /** @see iCountListener#countUpdate(int, int) */
+    public void countUpdate(int categories, int snippets) {
+        for (iCountListener listener : countListeners) {
+            listener.countUpdate(categories, snippets);
+        }
+    }
 
-	/**
-	 * @see jcodecollector.listener.CategoryListener#categoriesUpdated(java.
-	 *      lang.String)
-	 */
-	public void categoriesUpdated(String selected) {
-		for (CategoryListener listener : categoryListeners) {
-			listener.categoriesUpdated(selected);
-		}
-	}
+    public void updateSnippetStatus(boolean validated, boolean saved, boolean locked) {
+        this.snippetValidated = validated;
+        this.snippetSaved = saved;
+        this.snippetLocked = locked;
 
-	/**
-	 * @see jcodecollector.listener.CategoryListener#categoryRemoved(java.lang
-	 *      .String)
-	 */
-	public void categoryRemoved(String name) {
-		for (CategoryListener listener : categoryListeners) {
-			listener.categoryRemoved(name);
-		}
-	}
+        for (iSnippetListener listener : snippetListeners) {
+            listener.updateSnippetStatus(validated, saved, locked);
+        }
+    }
 
-	/**
-	 * @see jcodecollector.listener.CategoryListener#categoryRenamed(java.lang
-	 *      .String, java.lang.String)
-	 */
-	public void categoryRenamed(String oldName, String newName) {
-		for (CategoryListener listener : categoryListeners) {
-			listener.categoryRenamed(oldName, newName);
-		}
-	}
+    public void updateMenu(boolean enabled, boolean resetExportSubMenu) {
+        for (iMenuListener listener : menuListeners) {
+            listener.updateMenu(enabled, resetExportSubMenu);
+        }
+    }
 
-	/** @see jcodecollector.listener.SnippetListener#snippetRemoved(Snippet) */
-	public void snippetRemoved(Snippet snippet) {
-		for (SnippetListener listener : snippetListeners) {
-			listener.snippetRemoved(snippet);
-		}
-	}
+    /** @see iWindowListener#updateWindowStatus(boolean) */
+    public void updateWindowStatus(boolean documentModified) {
+        for (iWindowListener listener : windowListeners) {
+            listener.updateWindowStatus(documentModified);
+        }
+    }
 
-	/**
-	 * @see jcodecollector.listener.SnippetListener#snippetRenamed(java.lang.String,
-	 *      java.lang.String)
-	 */
-	public void snippetRenamed(String oldName, String newName) {
-		for (SnippetListener listener : snippetListeners) {
-			listener.snippetRenamed(oldName, newName);
-		}
-	}
+    /** @see iWindowListener#updateLineNumbers(boolean) */
+    public void updateLineNumbers(boolean enabled) {
+        for (iWindowListener listener : windowListeners) {
+            listener.updateLineNumbers(enabled);
+        }
+    }
 
-	/** @see SnippetListener#snippetEdited(Snippet) */
-	public void snippetEdited(Snippet snippet) {
-		for (SnippetListener listener : snippetListeners) {
-			listener.snippetEdited(snippet);
-		}
-	}
+    public void setNameOfSelectedCategory(String selectedCategory) {
+        this.nameOfSelectedCategory = selectedCategory;
+    }
 
-	/** @see SnippetListener#syntaxRenamed(String, String) */
-	public void syntaxRenamed(String newName, String category) {
-		for (SnippetListener listener : snippetListeners) {
-			listener.syntaxRenamed(newName, category);
-		}
-	}
+    public void setNameOfSelectedSnippet(String selectedSnippet) {
+        this.nameOfSelectedSnippet = selectedSnippet;
+    }
 
-	/**
-	 * Conta quante categorie e quanti snippet sono presenti nel database o come
-	 * risultato della ricerca.
-	 */
-	public void countUpdate() {
-		int categories;
-		int snippets;
+    public String getNameOfSelectedCategory() {
+        return this.nameOfSelectedCategory;
+    }
 
-		if (searchActive) {
-			categories = Controller.getInstance().countCategories();
-			snippets = Controller.getInstance().countSnippets();
-		} else {
-			categories = DBMS.getInstance().countCategories();
-			snippets = DBMS.getInstance().countSnippets();
-		}
+    public String getNameOfSelectedSnippet() {
+        return this.nameOfSelectedSnippet;
+    }
 
-		countUpdate(categories, snippets);
-	}
+    public void setSnippetLocked(boolean snippetLocked) {
+        this.snippetLocked = snippetLocked;
+    }
 
-	/** @see CountListener#countUpdate(int, int) */
-	public void countUpdate(int categories, int snippets) {
-		for (CountListener listener : countListeners) {
-			listener.countUpdate(categories, snippets);
-		}
-	}
+    public boolean isSnippetValidated() {
+        return snippetValidated;
+    }
 
-	public void updateSnippetStatus(boolean validated, boolean saved, boolean locked) {
-		this.snippetValidated = validated;
-		this.snippetSaved = saved;
-		this.snippetLocked = locked;
+    public boolean isSnippetSaved() {
+        return snippetSaved;
+    }
 
-		for (SnippetListener listener : snippetListeners) {
-			listener.updateSnippetStatus(validated, saved, locked);
-		}
-	}
+    public boolean isSnippetLocked() {
+        return snippetLocked;
+    }
 
-	public void updateMenu(boolean enabled, boolean resetExportSubMenu) {
-		for (MenuListener listener : menuListeners) {
-			listener.updateMenu(enabled, resetExportSubMenu);
-		}
-	}
+    public void setPreviousSnippet(Snippet previousSnippet) {
+        this.previousSnippet = previousSnippet;
+    }
 
-	/** @see WindowListener#updateWindowStatus(boolean) */
-	public void updateWindowStatus(boolean documentModified) {
-		for (WindowListener listener : windowListeners) {
-			listener.updateWindowStatus(documentModified);
-		}
-	}
+    public Snippet getPreviousSnippet() {
+        return previousSnippet;
+    }
 
-	/** @see WindowListener#updateLineNumbers(boolean) */
-	public void updateLineNumbers(boolean enabled) {
-		for (WindowListener listener : windowListeners) {
-			listener.updateLineNumbers(enabled);
-		}
-	}
+    /** @see iSearchListener#updateSearch(boolean) */
+    public void updateSearch(boolean active) {
+        searchActive = active;
 
-	/**
-	 * Imposta il nome della categoria selezionata.
-	 * 
-	 * @param selectedCategory La categoria selezionata.
-	 */
-	public void setNameOfSelectedCategory(String selectedCategory) {
-		this.nameOfSelectedCategory = selectedCategory;
-	}
+        for (iSearchListener listener : searchListeners) {
+            listener.updateSearch(!active);
+        }
+    }
 
-	/**
-	 * Imposta il nome dello snippet selezionato.
-	 * 
-	 * @param selectedSnippet Lo snippet selezionato.
-	 */
-	public void setNameOfSelectedSnippet(String selectedSnippet) {
-		this.nameOfSelectedSnippet = selectedSnippet;
-	}
+    public boolean isSearchActive() {
+        return searchActive;
+    }
 
-	/**
-	 * Restuisce il nome della categoria selezionata.
-	 * 
-	 * @return il nome della categoria selezionata
-	 */
-	public String getNameOfSelectedCategory() {
-		return this.nameOfSelectedCategory;
-	}
+    public void startSearch() {
+        searchActive = true;
+    }
 
-	/**
-	 * Restuisce il nome dello snippet selezionato.
-	 * 
-	 * @return il nome dello snippet selezionato
-	 */
-	public String getNameOfSelectedSnippet() {
-		return this.nameOfSelectedSnippet;
-	}
+    public void stopSearch() {
+        searchActive = false;
+    }
 
-	/**
-	 * Blocca o sblocca lo snippet corrente
-	 * 
-	 * @param snippetLocked Se <code>true</code> lo snippet viene bloccato, con
-	 *        <code>false</code> viene sbloccato.
-	 */
-	public void setSnippetLocked(boolean snippetLocked) {
-		this.snippetLocked = snippetLocked;
-	}
-
-	/**
-	 * Indica se lo snippet corrente e' validato o meno.
-	 * 
-	 * @return <code>true</code> se lo snippet e' stato validato,
-	 *         <code>false</code> altrimenti
-	 */
-	public boolean isSnippetValidated() {
-		return snippetValidated;
-	}
-
-	/**
-	 * Indica se lo snippet corrente e' stato salvato e se da allora non ha piu'
-	 * subito modifiche.
-	 * 
-	 * @return <code>true</code> se lo snippet e' stato salvato.
-	 */
-	public boolean isSnippetSaved() {
-		return snippetSaved;
-	}
-
-	/**
-	 * Indica se lo snippet e ' bloccato o meno.
-	 * 
-	 * @return <code>true</code> se lo snippet e' bloccato, <code>false</code>
-	 *         altrimenti
-	 */
-	public boolean isSnippetLocked() {
-		return snippetLocked;
-	}
-
-	/**
-	 * Imposta lo snippet precedentemente selezionato.
-	 * 
-	 * @param previousSnippet Lo snippet precedentemente selezionato.
-	 */
-	public void setPreviousSnippet(Snippet previousSnippet) {
-		this.previousSnippet = previousSnippet;
-	}
-
-	/**
-	 * Restituisce lo snippet precedentemente selezionato.
-	 * 
-	 * @return lo snippet precedentemente selezionato
-	 */
-	public Snippet getPreviousSnippet() {
-		return previousSnippet;
-	}
-
-	/** @see SearchListener#updateSearch(boolean) */
-	public void updateSearch(boolean active) {
-		searchActive = active;
-
-		for (SearchListener listener : searchListeners) {
-			listener.updateSearch(!active);
-		}
-	}
-
-	/**
-	 * Indica se la ricerca e' attiva.
-	 * 
-	 * @return <code>true</code> se la ricerca attiva, <code>false</code>
-	 *         altrimenti
-	 */
-	public boolean isSearchActive() {
-		return searchActive;
-	}
-
-	/** Ferma la ricerca (o meglio: entra in modalita' 'ricerca') */
-	public void startSearch() {
-		searchActive = true;
-	}
-
-	/** Ferma la ricerca (o meglio: esce dalla modalita' 'ricerca') */
-	public void stopSearch() {
-		searchActive = false;
-	}
-
-	public boolean isDatabaseEmpty() {
-		return DBMS.getInstance().countCategories() == 0;
-	}
+    public boolean isDatabaseEmpty() {
+        return DBMS.getInstance().countCategories() == 0;
+    }
 
 }
