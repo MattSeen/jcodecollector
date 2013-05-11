@@ -1,7 +1,7 @@
 jCodeCollector
 ==============
 
-jCodeCollector was a simple snippets manager for Mac OS X, Windows and Linux originally developed by Alessandro Cocco in his free time who open source the code in September 2012. I have decided to improve and eventually build upon the foundation he has created.
+jCodeCollector was a simple snippets manager for Mac OS X, Windows and Linux originally developed by Alessandro Cocco, read more here at http://www.alessandrococco.com/p/jcodecollector_22.html, in his free time who open source the code in September 2012. I have decided to improve and eventually build upon the foundation he has created.
 
 I forked the repo at it's last stable version (2.5) which was released in January 2011.
 
