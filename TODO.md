@@ -18,9 +18,11 @@ Read over the code base, debug through the main flows and see it in action.
 
 ### Statically analysis
 ~~Setup sonar to scan the code~~
+
 Done and by the looks of the analysis the code is pretty clean as is. Only issue now is the italian comments.
 
 ~~Install Google Code Pro utility in Eclipse~~
+
 Done, this tools allows me to analysis the code in the same as Sonar and as such I don't need a seperate tools for development purposes.
 
 ### Diagramming
