@@ -25,19 +25,13 @@ import javax.swing.border.EmptyBorder;
 import jcodecollector.util.GeneralInfo;
 
 /**
- * La finestra di about di jCodeCollector. Mostra la versione dell'applicazione
- * e le informazioni sull'autore.
+ * The window of about jCodeCollector. Displays the version of the application
+ * And author information.
  * 
  * @author Alessandro Cocco
  */
 public class AboutWindow extends JDialog {
 
-    /**
-     * Crea la finestra di about di jCodeCollector.
-     * 
-     * @param mainFrame
-     *            Il riferimento alla finestra principale dell'applicazione.
-     */
     public AboutWindow(final MainFrame mainFrame) {
         setResizable(false);
         setTitle("About " + GeneralInfo.APPLICATION_NAME);

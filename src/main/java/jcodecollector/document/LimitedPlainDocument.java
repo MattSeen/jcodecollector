@@ -20,24 +20,24 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
 
 /**
- * Sotto classe di <code>PlainDocument</code>, permette di specificare il numero
- * massimo di caratteri accettati dal documento.
+ * Subclass of <code> PlainDocument </ code> allows you to specify the number
+ * Maximum number of characters accepted by the document.
  * 
  * @author Alessandro Cocco me@alessandrococco.com
  */
 public class LimitedPlainDocument extends PlainDocument {
     private static final long serialVersionUID = 450773819997253578L;
 
-    /** Numero massimo di caratteri inseribili nel documento. */
+    /** Maximum number of characters inserted in the document. */
     private int               maxSize;
 
     /**
-     * Crea un <code>LimitedPlainDocument</code> che permette di inserire al
-     * massimo <code>maxSize</code> caratteri.
+     * Create an <code> LimitedPlainDocument </ code> that allows you to enter
+     * the Maximum <code> maxSize </ code> characters.
      * 
      * @param maxSize
-     *            Il massimo numero di caratteri che possono essere inseriti nel
-     *            documento.
+     *            The maximum number of characters that can be entered into
+     *            Document.
      */
     public LimitedPlainDocument(int maxSize) {
         this.maxSize = maxSize;

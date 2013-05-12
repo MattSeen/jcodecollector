@@ -17,7 +17,23 @@ package jcodecollector.data;
 
 import jcodecollector.data.settings.ApplicationSettings;
 
+/**
+ * Warning this class is a singleton.
+ * 
+ * @author MattSeen
+ *
+ */
 public class SearchFilter {
+    
+    private static SearchFilter filter = new SearchFilter();
+
+    private SearchFilter() {
+        // do nothing
+    }
+    public static SearchFilter getInstance() {
+        return filter;
+    }
+    
     public boolean isSearchInNameEnabled() {
         return ApplicationSettings.getInstance().isSearchInNameEnabled();
     }
@@ -75,14 +91,5 @@ public class SearchFilter {
         return sum;
     }
 
-    private static SearchFilter filter = new SearchFilter();
-
-    public static SearchFilter getInstance() {
-        return filter;
-    }
-
-    private SearchFilter() {
-        // do nothing
-    }
 
 }

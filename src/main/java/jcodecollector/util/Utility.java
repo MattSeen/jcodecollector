@@ -21,7 +21,6 @@ package jcodecollector.util;
 public class Utility {
 
     private Utility() {
-        // do nothing
     }
     
     private static final String[] invalidNames = { "null", "Remove", "New Category...",

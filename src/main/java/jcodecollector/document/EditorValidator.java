@@ -26,37 +26,37 @@ import javax.swing.text.JTextComponent;
 import jcodecollector.State;
 
 /**
- * Validatore di componenti di testo come {@link JTextArea}, {@link JTextField},
- * {@link JTextPane}, {@link JEditorPane} ecc.
+ * Validator text components such as {@link TextArea}, {@link Text Field}, *
+ * {@link JTextPane}, {@link JEditorPane} etc..
  * 
  * @author Alessandro Cocco
  */
 public class EditorValidator implements DocumentListener {
 
-    /** I componenti di testo da validare. */
+    /** Text components to be validated. */
     private JTextComponent[] components;
 
-    /** Gli eventuali componenti opzionali. */
+    /** Optional items. */
     private boolean[]        optional;
 
     /**
-     * Se <code>true</code> indica che il validatore e' in funzione, se
-     * <code>false</code> il validatore e' disattivato.
+     * If <code> true </ code> indicates that the validator and 'in function, if
+     * <code> False </ code> the validator and 'off.
      */
     private boolean          running;
 
     /**
-     * Costruisce il validatore dei componenti indicati. Il secondo parametro
-     * indica se ci sono componenti opzionali.
+     * Constructs a validator components indicated. The second parameter
+     * Indicates if there are optional components.
      * 
      * @param components
-     *            I componenti ({@link JTextArea}, {@link JTextField},
-     *            {@link JEditorPane} ecc. da validare.
+     *            I Components (JTextArea @ link} , @ link JTextField}
+     *            {@link JEditorPane} etc.. da validare.
      * @param optional
-     *            Un array della stessa dimensione del precedente. In ogni
-     *            posizione, <code>true</code> indica che il corrispondente
-     *            componente e' opzionale, <code>false</code> che e'
-     *            obbligatorio.
+     *            An array of the same size as the previous one. in each
+     *            Position, <code> true </ code> indicates that the
+     *            corresponding Component and 'optional <code> false </ code>
+     *            and Mandatory.
      */
     public EditorValidator(JTextComponent[] components, boolean[] optional) {
         if (components.length != optional.length) {
@@ -67,19 +67,19 @@ public class EditorValidator implements DocumentListener {
         this.optional = optional;
     }
 
-    /** Attiva il validatore. */
+    /** Activate the validator. */
     public void start() {
         running = true;
     }
 
-    /** Disattiva il validatore. */
+    /** Disable the validator. */
     public void stop() {
         running = false;
     }
 
     /**
-     * Valida i componenti di testo. Un componente di testo e' considerato
-     * valido se contiene almeno un carattere, a meno che non sia opzionale.
+     * Valid text components. A text component and 'considered Valid if it
+     * contains at least one character, unless it is optional.
      */
     private void validate() {
         if (!running) {
